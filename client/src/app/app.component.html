@@ -1,0 +1,27 @@
+<div class="container">
+  <mat-toolbar color="primary" class="toolbar">
+    <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="app-name"><a class="home-link" href="/">{{title}}</a></h1>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #drawer
+      class="sidenav"
+      fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="!(isHandset$ | async)">
+      <mat-toolbar color="primary">
+        <button mat-icon-button (click)="drawer.toggle()"><mat-icon>menu</mat-icon></button>
+        <a class="home-link" href="/">{{title}}</a>
+      </mat-toolbar>
+      <mat-nav-list>
+        <a routerLinkActive="active" routerLink="/videos" mat-list-item>Videos</a>
+        <a routerLinkActive="active" routerLink="/upload" mat-list-item>Upload</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="main-content">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,78 @@
+version: '2'
+services:
+  client:
+    build: 
+      context: ./client
+      dockerfile: ../dockerfiles/client.Dockerfile
+  router:
+    build: 
+      context: ./services/router
+      dockerfile: ../../dockerfiles/node.Dockerfile
+    ports:
+    - "3000:3000"
+    environment:
+    - REDIS_URL=redis://redis:6379/0
+    - MONGO_URL=mongodb://mongo:27017/nodetube
+    - SERVICE_DNS=router
+    - PORT=3000
+    - WEB_BUILD_PATH=/web/dist
+    links:
+    - redis
+    - query
+    - stream
+    - upload
+    - thumbnail
+    volumes_from:
+    - client
+  query:
+    build:
+      context: ./services/query
+      dockerfile: ../../dockerfiles/node.Dockerfile
+    environment:
+    - REDIS_URL=redis://redis:6379/0
+    - MONGO_URL=mongodb://mongo:27017/nodetube
+    - SERVICE_DNS=query
+    links:
+    - redis
+    - mongo
+  upload:
+    build:
+      context: ./services/upload
+      dockerfile: ../../dockerfiles/node.Dockerfile
+    environment:
+    - REDIS_URL=redis://redis:6379/0
+    - MONGO_URL=mongodb://mongo:27017/nodetube
+    - SERVICE_DNS=upload
+    links:
+    - redis
+    - mongo
+  thumbnail:
+    build:
+      context: ./services/thumbnail
+      dockerfile: ../../dockerfiles/ffmpeg.Dockerfile
+    environment:
+    - REDIS_URL=redis://redis:6379/0
+    - MONGO_URL=mongodb://mongo:27017/nodetube
+    - SERVICE_DNS=thumbnail
+    links:
+    - redis
+    - mongo
+  stream:
+    build:
+      context: ./services/stream
+      dockerfile: ../../dockerfiles/node.Dockerfile
+    environment:
+    - REDIS_URL=redis://redis:6379/0
+    - MONGO_URL=mongodb://mongo:27017/nodetube
+    - SERVICE_DNS=stream
+    links:
+    - redis
+    - mongo
+  redis:
+    image: redis
+  mongo:
+    image: mongo
+    volumes:
+    - mongo:/data
+volumes:
+  mongo: {}

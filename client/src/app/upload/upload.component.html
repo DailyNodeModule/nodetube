@@ -1,0 +1,18 @@
+<div class="upload-container">
+  <p>
+    <span *ngIf="!status; else issue">Use the form below to upload a video:</span>
+    <ng-template #issue>{{ status }}</ng-template>
+  </p>
+  <form method="POST" action="/api/upload" enctype="multipart/form-data" #form (submit)="doUpload($event)">
+    <mat-form-field>
+      <input matInput placeholder="Title" required value="" name="title">
+    </mat-form-field>
+    <br/>
+    <input name="video" type="file" required accept="video/*" />
+    <br/>
+    <br/>
+    <button type="submit" class="upload-button" mat-fab>
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+  </form>
+</div>

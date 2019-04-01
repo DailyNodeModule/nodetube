@@ -1,0 +1,21 @@
+{
+  "name": "@dailynodemodule/nodetube-stream",
+  "version": "1.0.0",
+  "description": "This project handles streaming the video to the client",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dailynodemodule/nodetube"
+  },
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "Zachary Boyd <zachary@dailynodemodule.com>",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "gridfs-stream": "^1.1.1",
+    "hydra": "^1.7.0",
+    "hydra-express": "^1.7.0",
+    "mongodb": "^3.2.2"
+  }
+}

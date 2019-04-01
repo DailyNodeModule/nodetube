@@ -1,0 +1,16 @@
+.video-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    .video-list-item-container {
+        margin: 0 10px;
+    }
+
+    @media screen and (max-width: 576px) {
+        flex-direction: column;
+        .video-list-item-container {
+            margin: 10px auto;
+        }
+    }
+}
